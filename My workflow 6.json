@@ -1,0 +1,114 @@
+{
+  "name": "My workflow 6",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "id": "a7f7c0b2-bad9-4e79-82bd-23fd64c1dc7e",
+      "name": "On Chat Message",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "7c68e42f-7953-44e3-8d47-39a88f9b175d"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Anda adalah AI Asisten Manajemen Proyek TI yang ahli. Tugas Anda adalah membantu pengguna merancang Project Charter, menyusun Work Breakdown Structure (WBS), dan manajemen risiko. Jawablah dengan terstruktur, profesional, dan menggunakan bahasa Indonesia."
+        }
+      },
+      "id": "0ec71d8a-de4b-4272-a8ab-c5b35a8f1bf4",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5b4d1222-335c-476f-844e-234e2400ecb7",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        192,
+        240
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "OBBgBFvPLe0KlSn9",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "01ad6bc2-fcc1-4235-894a-ffd911b96642",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        352,
+        240
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On Chat Message": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "927df633-f0b8-4121-a2f9-e56261715808",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "iB9G38xA26FzQ8UR",
+  "tags": []
+}
