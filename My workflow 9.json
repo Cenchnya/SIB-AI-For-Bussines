@@ -1,0 +1,158 @@
+{
+  "name": "My workflow 9",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "id": "690162c8-0ef8-4b7c-9c64-b8054676002f",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1,
+      "position": [
+        16,
+        -32
+      ],
+      "webhookId": "chatbot-webhook-id"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah asisten layanan pelanggan yang ramah. Tugas utama kamu adalah memberikan informasi produk dan harga berdasarkan data yang ada di database. Gunakan tool Google Sheets untuk mencari data produk dan harganya. Jika data tidak ditemukan, sampaikan dengan sopan bahwa produk tersebut tidak tersedia saat ini."
+        }
+      },
+      "id": "92194518-8bc1-4688-827e-6cf6798d64bb",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        240,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ac652bbb-5dc2-478c-bf0c-da55cd7c13b2",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        208,
+        192
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "OBBgBFvPLe0KlSn9",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "81e14466-4642-4df6-8c0a-55a589ed9709",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        368,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1YyC27eAKWEWS9UORBJHY5iK4EkwZVRnr0-l2XFTEEVQ",
+          "mode": "list",
+          "cachedResultName": "n8n 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YyC27eAKWEWS9UORBJHY5iK4EkwZVRnr0-l2XFTEEVQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YyC27eAKWEWS9UORBJHY5iK4EkwZVRnr0-l2XFTEEVQ/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "e981398b-a8ea-4e14-98ea-6d44f4e28f09",
+      "name": "Get row(s) in sheet",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        192
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3fCa4FAkYYs6ELjH",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "45446336-6402-4499-bed1-07e567a6419d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "tb0ApQkOAFYeIRXC",
+  "tags": []
+}
